@@ -1,0 +1,24 @@
+[
+    {
+      "_header": {
+        "file": "mentor_insights.json",
+        "project": "Eyes Unclouded App – Mentor Wisdom Engine",
+        "description": "Strategic and philosophical insights stored for Role Type-based onboarding and growth.",
+        "author": "Khaylub Thompson-Calvin",
+        "created_on": "2025-04-17",
+        "notes": "This entry is part of the Virtues Library and Mentor Mode system. Narration file located in static/audio/mentor_lessons/."
+      }
+    },
+    {
+      "title": "Strategic Awareness: Translating Systems and Time",
+      "content": "Ultimately, the systems analyst must understand the business’ and the users’ needs, as well as the technical aspects of system and program development. When they describe business processes to programmers, they must speak a language that programmers will understand clearly. Similarly, when communicating with managers, the analyst often must translate complex technical issues into words and images that nontechnical people can grasp.\n\nTime value of money (TVM) is a fundamental concept that influences every financial decision you make. Money today is worth more than money tomorrow. Interest rates and inflation affect this. Strategic decisions must factor in ROI, NPV, and payback analysis, but also common sense. Even when models say 'no,' wisdom sometimes says 'go.'",
+      "tags": ["strategy", "translation", "finance", "wisdom", "NPV", "TVM", "decision-making"],
+      "role_types": ["Strategist", "Mentor", "Warden", "Observer"],
+      "insight_type": "Mentor Reflection",
+      "format": "text + audio",
+      "audio_filename": "Strategic_Awareness.mp3",
+      "author": "Course Reflection",
+      "date_added": "2025-04-17"
+    }
+  ]
+  

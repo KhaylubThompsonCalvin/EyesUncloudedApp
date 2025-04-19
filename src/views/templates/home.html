@@ -1,0 +1,65 @@
+<!--
+ File: home.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Engine
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/16/2025
+ Description:
+   This is an alternate ceremonial gateway into the Eyes Unclouded system.
+
+   Symbolically, this page represents the "quiet threshold"—an elegant,
+   meditative welcome where the user can choose to enter the Archive of Perception.
+   It provides a minimalist interface with an animated emblem that acts as a portal.
+
+   Functionally:
+   • Displays the Eyes Unclouded sigil as a clickable hero element
+   • Links directly to the login screen
+   • Sets tone for perception, behavioral analysis, and virtue orientation
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Eyes Unclouded – Legacy Entry{% endblock %}
+
+{% block hero %}
+  <!-- Hero Image Sigil: glowing gateway into the perception engine -->
+  <div class="hero-logo">
+    <a href="{{ url_for('auth.login') }}">
+      <img
+        src="{{ url_for('static', filename='images/EyesUnclouded_logo.png') }}"
+        alt="Eyes Unclouded Logo"
+        class="logo-img interactive-glow"
+        style="max-width:320px; border-radius:14px; box-shadow:0 0 25px rgba(0,255,204,0.45);"
+      />
+    </a>
+    <!-- Optional: Audio intro could be added here later -->
+  </div>
+{% endblock %}
+
+{% block header %}
+  <!-- Symbolic title for this alternate entry point -->
+  Welcome to the Eyes Unclouded Interface
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    <!-- Instructional subheader for orientation -->
+    <h2>Enter the Archive of Perception</h2>
+
+    <!-- Thematic description -->
+    <p>
+      This engine is your gateway to behavioral clarity and virtue calibration.
+    </p>
+
+    <!-- Call-to-action to initiate login -->
+    <a href="{{ url_for('auth.login') }}" class="btn highlight-btn">
+      <i class="material-icons">login</i> Enter the System
+    </a>
+  </div>
+{% endblock %}
+
+
+
+
+

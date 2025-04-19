@@ -1,0 +1,82 @@
+<!--
+ File: create_template.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Message Templates
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   This is the template creation chamber of the Eyes Unclouded system.
+
+   Users define reusable “Perceptual Templates”—encoded messages, symbolic frames,
+   or legacy blueprints that can be recalled for future broadcasts.
+   Templates may contain structured wisdom, deception patterns, or archetypal insight.
+
+   Functionally:
+   • Accepts a title, subject, and full narrative body
+   • Optionally allows uploading files (images, videos, PDFs, .docx, etc.)
+   • Stores for later recall in strategic broadcast contexts
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Design Symbolic Insight{% endblock %}
+{% block header %}Create Perceptual Template{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {# Flash messages for submission feedback #}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+          <strong>{{ message }}</strong>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Template Creation Form -->
+  <form
+    action="{{ url_for('template.create_template') }}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <!-- Template Title: symbolic name for the insight structure -->
+    <label for="template_name">Template Name:</label>
+    <input type="text" id="template_name" name="template_name" required>
+
+    <!-- Subject/Focus: the core concept, virtue, or deception frame -->
+    <label for="template_subject">Subject / Focus:</label>
+    <input type="text" id="template_subject" name="template_subject" required>
+
+    <!-- Main body: encoded insight, allegorical message, or doctrine -->
+    <label for="template_body">Encoded Narrative / Body:</label>
+    <textarea id="template_body" name="template_body" rows="8" required></textarea>
+
+    <!-- Optional media/file: for imagery, document symbols, or reference artifacts -->
+    <label for="attachment">Add Attachment (image, video, or doc):</label>
+    <input
+      type="file"
+      id="attachment"
+      name="attachment"
+      accept="image/*,video/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain"
+    >
+
+    <!-- Submit and archive the symbolic structure -->
+    <button type="submit">
+      <i class="material-icons">archive</i> Archive Template
+    </button>
+  </form>
+
+  <!-- Return path to the user's strategic dashboard -->
+  <p style="margin-top:20px;">
+    <a href="{{ url_for('auth.dashboard') }}">⟵ Return to Dashboard</a>
+  </p>
+</div>
+{% endblock %}
+
+
+
+
+

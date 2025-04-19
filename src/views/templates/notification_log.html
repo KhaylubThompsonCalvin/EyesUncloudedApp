@@ -1,0 +1,97 @@
+<!--
+ File: notification_log.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Archive
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/16/2025
+ Description:
+   This page acts as the user’s personal archive of past Perception Signals.
+
+   Users may review their historical broadcasts—each logged with timestamp,
+   sender identity, and emotional context. A date filter allows for strategic recall
+   and temporal insight mapping, aiding the process of reflection, memory, and behavioral trend tracking.
+
+   Functionally:
+   • Displays a reverse-chronological log of broadcasts
+   • Supports date-range filtering via GET parameters
+   • Allows return to central dashboard from archive interface
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Broadcast Archive – Eyes Unclouded{% endblock %}
+
+{% block header %}
+  <!-- Page title and symbolic icon -->
+  <i class="material-icons">history</i> Strategic Notification Log
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    {# Flash messages: show success/error from filtered queries or backend logic #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            <strong>{{ message }}</strong>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Filter form: allows the user to narrow logs by broadcast date -->
+    <form method="get" action="{{ url_for('notification.notification_log') }}">
+      <label for="start_date">From:</label>
+      <input type="date" id="start_date" name="start_date" required>
+
+      <label for="end_date">To:</label>
+      <input type="date" id="end_date" name="end_date" required>
+
+      <button type="submit">
+        <i class="material-icons">filter_alt</i> Apply Filter
+      </button>
+    </form>
+
+    <hr>
+
+    <!-- Archive Table: if signals are found within filter range -->
+    {% if notifications %}
+      <table class="notifications-table-wrapper">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Intention</th>
+            <th>Sent By</th>
+            <th>Logged At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for notification in notifications %}
+            <tr>
+              <td><strong>{{ notification.title }}</strong></td>
+              <td>{{ notification.message }}</td>
+              <td>{{ notification.createdBy }}</td>
+              <td>{{ notification.sent_at }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <!-- If no signals match the filter range -->
+      <p class="flash-message alert">No broadcasts in this window.</p>
+    {% endif %}
+
+    <!-- Return path: re-enter the main system from archive view -->
+    <p style="margin-top: 20px;">
+      <a href="{{ url_for('auth.dashboard') }}">
+        <i class="material-icons">dashboard</i> Return to Dashboard
+      </a>
+    </p>
+  </div>
+{% endblock %}
+
+
+
+
+

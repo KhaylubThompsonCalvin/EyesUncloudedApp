@@ -1,0 +1,114 @@
+<!--
+ File: splash.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Splash Gateway
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   The ceremonial entry point to the Eyes Unclouded system.
+
+   This splash page acts as a symbolic gateway into the Archive of Insight.
+   Users are invited to begin their journey by listening to the Scholar's Voice—
+   a spoken invocation designed to initiate perception-based reflection.
+   Upon playback, the interface visually fades, signaling a transition from
+   the external world to the internal realm of self-mastery, virtue logging,
+   and behavioral exploration.
+
+   Functionally, this page:
+   • Preloads and plays the introductory audio (EyesUnclouded_Intro.mp3)
+   • Triggers animated effects and visual fades post-audio
+   • Routes users forward to login and Role selection
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Eyes Unclouded – Gateway{% endblock %}
+
+{% block hero %}
+  <!-- Hero Sigil: Central visual symbol of the Eyes Unclouded system -->
+  <div class="hero-logo">
+    <img
+      src="{{ url_for('static', filename='images/EyesUnclouded.png') }}"
+      alt="Eyes Unclouded Legacy Sigil"
+      class="hero-img pulse-effect"
+    />
+  </div>
+
+  <!-- Hidden audio element that delivers the “Scholar’s Voice” introduction -->
+  <audio
+    id="introAudio"
+    preload="auto"
+    style="display: none;"
+  >
+    <source
+      src="{{ url_for('static', filename='audio/EyesUnclouded_Intro.mp3') }}"
+      type="audio/mpeg"
+    >
+    Your browser doesn’t support audio playback.
+  </audio>
+
+  <!-- Button that initiates the voiceover and symbolically “opens the gate” -->
+  <button
+    id="playIntro"
+    class="highlight-btn interactive-glow fade-on-audio"
+  >
+    🔊 Listen to the Voice of a Scholar
+  </button>
+
+  <!-- Audio and transition logic -->
+  <script>
+    const audio = document.getElementById('introAudio');
+    const btn = document.getElementById('playIntro');
+
+    // When user clicks the button, play audio and fade the button out
+    btn.addEventListener('click', () => {
+      audio.play().catch(() => {});  // Prevent crash on autoplay block
+      btn.style.display = 'none';    // Hide button once clicked
+    });
+
+    // When audio ends, fade out any element marked with .fade-on-audio
+    audio.addEventListener('ended', () => {
+      document.querySelectorAll('.fade-on-audio').forEach(el => {
+        el.classList.add('fade-out');
+      });
+    });
+  </script>
+{% endblock %}
+
+{% block header %}
+  <!-- Section Title: introduces the purpose of this gateway screen -->
+  <h2 class="fade-on-audio">Initiation Gateway – Enter the Library of Insight</h2>
+{% endblock %}
+
+{% block content %}
+  <!-- App overview paragraph: explains the purpose of the Eyes Unclouded system -->
+  <p
+    class="fade-on-audio"
+    style="font-size:1.1em;color:#90caf9;font-style:italic;margin-bottom:1rem;"
+  >
+    <strong>Eyes Unclouded</strong> is a perception‑training web app that combines
+    behavioral logging, virtue scoring, and symbolic storytelling to help users
+    track insights, decode emotion, and sharpen legacy‑focused self‑mastery.
+  </p>
+
+  <!-- Welcome paragraph: narrative introduction to the user -->
+  <p class="fade-on-audio">
+    Welcome, Seeker. This is your entry into the behavioral library where wisdom
+    is preserved and legacies are unlocked.
+  </p>
+
+  <!-- Call-to-action link: continues the journey into login/registration -->
+  <a
+    href="{{ url_for('auth.login') }}"
+    class="highlight-btn interactive-glow fade-on-audio"
+  >
+    <i class="material-icons">login</i> Begin the Path
+  </a>
+{% endblock %}
+
+
+
+
+
+
+

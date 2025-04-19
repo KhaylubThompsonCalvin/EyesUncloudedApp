@@ -1,0 +1,44 @@
+# CIS234A: Real World Programming
+# Project: Food Pantry Notification System – Sprint 1
+# Name: Khaylub Thompson-Calvin
+# Date: 4/14/2025
+# Description:
+# This system enables a college food pantry to send notifications, manage templates,
+# authenticate users, and log communications using Flask and MongoDB.
+# This file is part of the Sprint 1 Agile setup and includes key planning, testing, or implementation details.
+# Source: Assignment A1 Specification, PCC CIS234A Course Materials
+# ***********************************************************************
+
+## Login / Account Creation (Subscriber Account Creation & Login)
+
+1. Should users be able to log in using **either username or email, or just one?
+2. What level of password complexity is required (e.g., symbols, length)?
+3. How should session management be handled after login (e.g., Flask-Session)?
+4. What happens if a duplicate username or email is submitted?
+
+
+
+## Send Notification (Send New Notification to Subscribers)
+
+1. Should notifications support HTML formatting (e.g., bold text, clickable links)?
+2. Can staff send messages to a subset of subscribers (e.g., by group or tag)?
+3. Can notifications be scheduled for future delivery?
+4. What is the expected length limit for notification subject/body?
+
+
+
+## Template Creation (Create and Save Notification Templates)
+
+1. What **placeholders will be supported in templates (e.g., `{{firstName}}`, `{{pickupTime}}`)?
+2. Should templates be pre-approved**, or can anyone on staff create one?
+3. Can templates be edited after being saved, or only deleted and re-created?
+4. Will there be categories or tags to organize templates?
+
+
+
+## Review Log (Review Notification Log)
+
+1. Should logs include **failed delivery attempts and error details?
+2. How long should notification logs be retained before deletion (if at all)?
+3. Can logs be filtered by date, sender, or keyword?
+4. Who is authorized to view or manage the logs?

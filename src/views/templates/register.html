@@ -1,0 +1,128 @@
+<!--
+ File: register.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Legacy Engine
+ Author: Khaylub Thompson-Calvin
+ Date: 04/17/2025
+ Description:
+   This is the ceremonial profile registration page for new users of the Eyes Unclouded system.
+
+   Here, the user begins their legacy by:
+   • Entering their identity credentials (Legacy ID, Codename, Email)
+   • Selecting their Role Type (a symbolic archetype)
+   • Defining their cognitive readiness level
+   • Listening to onboarding audio (system overview + symbolic role preview)
+
+   Functionally, this form:
+   • Plays a role overview narration via ElevenLabs
+   • Dynamically loads and plays a role-specific audio preview upon selection
+   • Validates all fields before submitting to the Flask back-end
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Join the Eyes Unclouded{% endblock %}
+{% block header %}Initiate Your Legacy Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {# Flash messages: success or error feedback from registration attempt #}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+          <strong>{{ message }}</strong>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {# Overview audio: symbolic introduction to the system’s purpose #}
+  <audio id="overviewAudio" src="{{ url_for('audio.serve_audio', filename=overview_audio) }}"></audio>
+  <button type="button" id="playOverviewBtn">
+    Play Role Overview
+  </button>
+
+  {# Registration form – creates the user's symbolic identity #}
+  <form action="{{ url_for('auth.register') }}" method="POST">
+
+    <!-- Identity Fields -->
+    <label for="fullname">Full Name (Legacy ID):</label>
+    <input type="text" id="fullname" name="fullname" required>
+
+    <label for="username">Username (Codename):</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="email">Email Contact:</label>
+    <input type="email" id="email" name="email" required>
+
+    <!-- Password Fields -->
+    <label for="password">Create Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+    <!-- Role Type: symbolic class that affects perception, audio, interface -->
+    <label for="role">Select Role Type:</label>
+    <select name="role_type" id="role">
+      {% for r in roles %}
+        <option value="{{ r }}">{{ r }}</option>
+      {% endfor %}
+    </select>
+
+    {# Audio preview for role type – changes dynamically based on selection #}
+    <audio id="roleAudio"></audio>
+    <button type="button" id="playRoleBtn" disabled>
+      Play Role Preview
+    </button>
+
+    <!-- Learning Level: user’s declared readiness for symbolic depth -->
+    <label for="learning_level">Cognitive Readiness Level:</label>
+    <select name="learning_level" id="learning_level">
+      <option value="1">Level 1 – Novice Observer</option>
+      <option value="2">Level 2 – Pattern Noticer</option>
+      <option value="3">Level 3 – Perception Analyst</option>
+    </select>
+
+    <!-- Final submission: user enters the Eyes Unclouded system -->
+    <button type="submit">Register & Enter System</button>
+  </form>
+
+  <!-- Alternate navigation for returning users -->
+  <p style="text-align:center; margin-top:20px;">
+    Already initialized? <a href="{{ url_for('auth.login') }}">Return to Gateway</a>
+  </p>
+</div>
+
+<!-- Role + Overview Audio Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const overviewAudio = document.getElementById('overviewAudio');
+    const playOverviewBtn = document.getElementById('playOverviewBtn');
+    const roleSelect = document.getElementById('role');
+    const roleAudio = document.getElementById('roleAudio');
+    const playRoleBtn = document.getElementById('playRoleBtn');
+
+    // Play system overview on click
+    playOverviewBtn.addEventListener('click', function() {
+      overviewAudio.load();
+      overviewAudio.play();
+    });
+
+    // Update preview when Role Type changes
+    roleSelect.addEventListener('change', function() {
+      const filename = 'Role_' + this.value + '.mp3';
+      roleAudio.src = "{{ url_for('audio.serve_audio', filename='') }}" + filename;
+      playRoleBtn.disabled = false;
+    });
+
+    // Play Role Preview
+    playRoleBtn.addEventListener('click', function() {
+      roleAudio.load();
+      roleAudio.play();
+    });
+  });
+</script>
+{% endblock %}

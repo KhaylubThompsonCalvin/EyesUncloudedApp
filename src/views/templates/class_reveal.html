@@ -1,0 +1,60 @@
+<!--
+ File: class_reveal.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Class Reveal Interface
+ Author: Khaylub Thompson-Calvin
+ Date: 04/18/2025
+ Description:
+   This page serves as the ceremonial moment where a user’s hidden Class
+   is revealed—an archetype forged from their behavioral patterns, virtues,
+   emotional responses, and perception logs.
+
+   The reveal combines:
+   • Symbolic titles and Orders (e.g., Queen of the Eagle Order)
+   • Audio narration voiced like an AI sage or ancient oracle
+   • A final prompt to advance into the legacy-driven dashboard
+
+   Functionally:
+   • Plays audio via ElevenLabs voice synthesis (Class_Reveal_Intro.mp3)
+   • Displays dynamic values from the user profile (class_name, class_title, animal_order)
+   • Completes the Role → Behavior → Class transformation arc
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Class Unlocked – Eyes Unclouded{% endblock %}
+
+{% block header %}Your Legacy Class Awaits{% endblock %}
+
+{% block content %}
+<div class="container class-reveal">
+
+  <!-- Archetype Display: user’s unlocked Class and symbolic title -->
+  <h2>Class Unlocked: {{ user.class_name }}</h2>
+  <p class="subtitle">
+    You are the <strong>{{ user.class_title }}</strong> of the {{ user.animal_order }} Order.
+  </p>
+
+  <!-- Mythic Audio Playback: voiceover that delivers the reveal as prophecy -->
+  <audio id="classAudio" autoplay controls>
+    <source
+      src="{{ url_for('audio.serve_audio', filename='Class_Reveal_Intro.mp3') }}"
+      type="audio/mpeg"
+    >
+    Your browser does not support audio playback.
+  </audio>
+
+  <!-- Descriptive narrative of what the Class represents -->
+  <div class="class-description">
+    <p>{{ user.class_description }}</p>
+  </div>
+
+  <!-- Legacy call-to-action: completes the unlock loop and returns to system -->
+  <a href="{{ url_for('auth.dashboard') }}" class="btn register-btn">
+    Continue Your Journey
+  </a>
+</div>
+{% endblock %}
+
+
+

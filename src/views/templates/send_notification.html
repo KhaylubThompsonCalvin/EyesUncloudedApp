@@ -1,0 +1,78 @@
+<!--
+ File: send_notification.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Legacy Broadcast System
+ Author: Khaylub Thompson-Calvin
+ Date: 04/16/2025
+ Description:
+   Interface for transmitting "Perception Broadcasts" into the Eyes Unclouded system.
+
+   These broadcasts are symbolic transmissions: insights, emotional reflections,
+   or tactical revelations authored by the user. Each signal is shaped by the user's
+   Role Type and archived for long-term growth analysis and virtue scoring.
+   Broadcasts act as strategic echoes in the Library of Insight, preserving not just
+   what was said—but when, why, and by whom it was said.
+
+   Functionally:
+   • Displays flash message feedback after broadcast attempt
+   • Collects title + encoded message
+   • Submits data to the Flask backend for storage and later retrieval
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Transmit Perception Signal{% endblock %}
+{% block header %}Broadcast a Strategic Insight{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    {# Feedback section for flash messages (success/error) #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        <strong>{{ message }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {# Broadcast submission form: sends strategic or symbolic insight #}
+    <form method="post" action="/send_notification">
+        <!-- Title of the signal, often poetic or strategic -->
+        <label for="subject">Signal Title:</label>
+        <input
+            type="text"
+            id="subject"
+            name="subject"
+            placeholder="e.g., 'Observe Micro-Agitation Pattern'"
+            required
+        >
+
+        <!-- The core message or insight being broadcast -->
+        <label for="message">Encoded Insight:</label>
+        <textarea
+            id="message"
+            name="message"
+            rows="6"
+            placeholder="Detail a virtue, observation, or deception marker..."
+            required
+        ></textarea>
+
+        <!-- Submission button: metaphorical 'launch' of the signal -->
+        <button type="submit">
+            <i class="material-icons">send</i> Transmit Signal
+        </button>
+    </form>
+
+    <!-- Link back to the dashboard; metaphorically “The Mind’s Core” -->
+    <p style="margin-top: 20px;">
+      <a href="/dashboard">Return to the Mind's Core</a>
+    </p>
+</div>
+{% endblock %}
+
+

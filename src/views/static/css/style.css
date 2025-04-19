@@ -1,0 +1,348 @@
+/*
+ ==============================================================================
+ File: style.css
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Interface System
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/16/2025
+ ==============================================================================
+ Description:
+   This stylesheet defines the visual identity and interface logic of the
+   Eyes Unclouded App. It is vision-themed, designed to feel alive—like
+   a training vessel for perception, virtue alignment, and symbolic mastery.
+
+   Aesthetic Philosophy:
+   • Dark mode inspired by deep consciousness and nebula aesthetics
+   • Emerald and aqua accent tones (virtue/energy)
+   • Text clarity for emotional logs and symbolic storytelling
+   • Responsive design and future-ready 3D extensibility
+
+   Core Functional Zones:
+   • Base Layout + Container Grid
+   • Sigil Animations + Hero Sections
+   • Form Interfaces for Logs, Templates, and Registration
+   • Flash Message Feedback System
+   • Notification Log Tables
+   • Footer with Repository Link
+   • Responsive Media Query (≤768px)
+
+   This CSS file is the skin of the symbolic engine—
+   visualizing legacy, clarity, and emotional resonance.
+==============================================================================
+*/
+
+/* Global Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base Styles */
+body {
+  font-family: "Roboto Mono", monospace;
+  background: #0b0f11;
+  color: #dce6eb;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle shimmer background for a living interface */
+body::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(0,255,204,0.1), transparent 70%);
+  animation: bgShimmer 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes bgShimmer {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Container Layout */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #12181d;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(0, 255, 204, 0.07);
+}
+
+/* Header */
+header.main-header {
+  text-align: center;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #1f2a33;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-img {
+  width: 180px;
+  height: auto;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+.app-title {
+  font-size: 2.5em;
+  color: #00ffc3;
+}
+
+.subtitle {
+  font-size: 1.1em;
+  color: #bbbbbb;
+  margin-top: 0.3rem;
+}
+
+/* Navigation */
+.main-nav {
+  background: #0c1216;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 204, 0.05);
+}
+
+.main-nav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 1rem 0;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  color: #00ffc3;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #ffee58;
+  transform: translateY(-2px);
+}
+
+.material-icons {
+  font-size: 1.3em;
+  vertical-align: middle;
+}
+
+/* Hero Section: full-width box with breathing animation */
+.hero-logo {
+  width: 100%;
+  height: 40vh;
+  max-height: 400px;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hero-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: zoomPulse 6s ease-in-out infinite;
+}
+
+@keyframes zoomPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+/* Fade‑out animation for text when audio ends */
+.fade-out {
+  animation: fadeOut 2s ease forwards;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Main Content */
+main {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+main h2,
+main p,
+main .highlight-btn {
+  /* Mark these as fade-on-audio targets */
+  will-change: opacity;
+}
+
+main p {
+  color: #a8bfc9;
+  font-size: 1.15em;
+  margin-bottom: 1rem;
+}
+
+/* Forms */
+form {
+  max-width: 640px;
+  margin: 2rem auto;
+  background: #1d262c;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.05);
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #8ecae6;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  background: #0f1c24;
+  border: 1px solid #444;
+  color: #e2f1f8;
+  transition: border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #00ffc3;
+  outline: none;
+}
+
+button,
+input[type="submit"] {
+  margin-top: 1.5rem;
+  background: linear-gradient(to right, #20e3b2, #2cccff);
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.4s ease, transform 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: linear-gradient(to right, #2cccff, #20e3b2);
+  transform: scale(1.02);
+}
+
+/* Flash Messages */
+.flash-message {
+  padding: 1em;
+  margin: 1.5rem auto;
+  width: 85%;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.flash-message.success {
+  background: #2e7d32;
+  color: #c8e6c9;
+}
+
+.flash-message.error {
+  background: #c62828;
+  color: #ffebee;
+}
+
+/* Notification Log Table Box */
+.notifications-table-wrapper {
+  width: 100%;
+  background: #1d262c;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+
+.notifications-table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.notifications-table-wrapper th,
+.notifications-table-wrapper td {
+  padding: 0.75rem;
+  border: 1px solid #333;
+  text-align: left;
+}
+
+.notifications-table-wrapper tr:nth-child(even) {
+  background: #0f1c24;
+}
+
+.notifications-table-wrapper th {
+  background: #203a43;
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  margin-top: 3rem;
+  padding: 1.2rem;
+  text-align: center;
+  background: #10191f;
+  border-top: 1px solid #222;
+  color: #9aa3a8;
+  font-size: 0.9em;
+}
+
+footer a {
+  color: #00ffc3;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+  .main-nav ul {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .main-nav a {
+    font-size: 1em;
+  }
+}
+
+
+

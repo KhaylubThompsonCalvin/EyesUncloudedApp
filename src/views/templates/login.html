@@ -1,0 +1,75 @@
+<!--
+ File: login.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Engine
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/16/2025
+ Description:
+   This is the secure entry portal to the Eyes Unclouded system.
+
+   Symbolically, it represents the threshold between the external world
+   and the internal archive of strategic thought, emotional reflection,
+   and virtue tracking. Users must pass authentication using their
+   codename or legacy-linked email along with a unique keyphrase.
+
+   Functionally:
+   • Accepts identity credentials via username or email
+   • Validates keyphrase against encrypted database entries
+   • Routes successful entries into the perception dashboard
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Enter the Archive – Eyes Unclouded{% endblock %}
+
+{% block header %}
+  <!-- Page header: login icon + symbolic invitation -->
+  <i class="material-icons" style="vertical-align:middle; color:#fdd835;">login</i>
+  Access Eyes Unclouded System
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    {# Flash messages: show feedback from login attempts (error, success) #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            <strong>{{ message }}</strong>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form action="{{ url_for('auth.login') }}" method="POST">
+
+      <!-- Codename or email address: connects identity to legacy profile -->
+      <label for="identifier">Codename or Legacy Email:</label>
+      <input type="text" id="identifier" name="identifier" required autofocus>
+
+      <!-- Keyphrase: metaphor for password-based authentication -->
+      <label for="password">Keyphrase:</label>
+      <input type="password" id="password" name="password" required>
+
+      <!-- Submit Button -->
+      <button type="submit">
+        <i class="material-icons">vpn_key</i> Unlock Access
+      </button>
+    </form>
+
+    <!-- Link to registration for new initiates -->
+    <p style="margin-top:10px;">
+      Not yet linked to the archive?
+      <a href="{{ url_for('auth.register') }}">Initiate Profile</a>
+    </p>
+  </div>
+{% endblock %}
+
+
+
+
+
+
+

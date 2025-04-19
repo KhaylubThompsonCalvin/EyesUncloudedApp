@@ -1,0 +1,15 @@
+# CIS234A: Real World Programming
+# Project: Food Pantry Notification System – Sprint 1
+# Name: Khaylub Thompson-Calvin
+# Date: 4/14/2025
+# Description:
+# This file outlines the goals of Sprint 1, aligning user stories with technical outcomes.
+# Source: Assignment A1 Specification, PCC CIS234A Course Materials
+# ***********************************************************************
+
+Sprint 1 Goals:
+
+- Implement secure login and registration using MongoDB
+- Create a form to send notifications to all users
+- Enable template creation and reuse
+- Track and view notification history

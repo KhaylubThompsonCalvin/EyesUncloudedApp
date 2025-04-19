@@ -1,0 +1,15 @@
+# Ignore secrets and environment
+.env
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore VS Code settings (optional)
+.vscode/
+
+# Ignore audio and temp files (optional)
+*.mp3
+*.wav
+
+

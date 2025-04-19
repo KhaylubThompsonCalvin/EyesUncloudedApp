@@ -1,0 +1,163 @@
+<!--
+ File: base.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Modular MVC Template
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   This is the master layout template of the Eyes Unclouded system.
+
+   It provides a consistent frame across all symbolic interfaces—whether the user
+   is broadcasting insights, decoding legacy classes, or designing virtue-bound templates.
+
+   Functionally:
+   • Integrates Flask Blueprint routing and Jinja block extensions
+   • Loads Material Icons, custom font (Roboto Mono), and core CSS
+   • Displays header, navigation, hero section, main content, and footer
+   • Includes scroll-triggered sigil animation and splash fade logic
+   • Mounts favicon and links dynamic routes for authentication, logs, and templates
+
+   This file is the structural spine of the perception engine.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Eyes Unclouded{% endblock %}</title>
+
+  <!-- Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- Symbolic Favicon (Sigil) -->
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Header: Emblem, Title, Subtitle -->
+    <header class="main-header">
+      <div class="logo-container">
+        <a href="{{ url_for('main.splash') }}">
+          <img
+            src="{{ url_for('static', filename='images/EyesUnclouded_logo.png') }}"
+            alt="Eyes Unclouded Logo"
+            class="logo-img scroll-beat"
+          />
+        </a>
+        <h1 class="app-title">Eyes Unclouded</h1>
+        <p class="subtitle">Perception. Virtue. Strategy.</p>
+      </div>
+    </header>
+
+    <!-- Navigation: Role-aware links (changes based on session) -->
+    <nav class="main-nav">
+      <ul class="nav-links">
+        <!-- Splash/Insight -->
+        <li>
+          <a href="{{ url_for('main.splash') }}">
+            <i class="material-icons">visibility</i> Insight
+          </a>
+        </li>
+
+        {% if session.get('user_id') %}
+          <!-- Logged‑in: Broadcast & Archive & Exit -->
+          <li>
+            <a href="{{ url_for('notification.notifications') }}">
+              <i class="material-icons">send</i> Post Insight
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('notification.notification_log') }}">
+              <i class="material-icons">history</i> Archive
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.logout') }}">
+              <i class="material-icons">logout</i> Exit
+            </a>
+          </li>
+        {% else %}
+          <!-- Not logged‑in: Enter -->
+          <li>
+            <a href="{{ url_for('auth.login') }}">
+              <i class="material-icons">login</i> Enter
+            </a>
+          </li>
+        {% endif %}
+
+        <!-- Common protected: Dashboard, Templates -->
+        <li>
+          <a href="{{ url_for('auth.dashboard') }}">
+            <i class="material-icons">dashboard</i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('template.create_template') }}">
+            <i class="material-icons">article</i> Templates
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Optional Page Hero Section (custom per view) -->
+    {% block hero %}{% endblock %}
+
+    <!-- Primary Page Header & Content Area -->
+    <main>
+      <h2>{% block header %}Welcome to Your Inner Library{% endblock %}</h2>
+      {% block content %}
+        <p>Reflect. Record. Respond with clarity.</p>
+      {% endblock %}
+    </main>
+
+    <!-- Footer with symbolic copyright -->
+    <footer>
+      <p>&copy; 2025 Eyes Unclouded Behavioral Engine</p>
+      <p>
+        <a href="https://github.com/KhaylubThompsonCalvin" target="_blank">
+          Explore Legacy Repository
+        </a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Scroll-triggered “beat” animation for logo -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logo = document.querySelector(".logo-img.scroll-beat");
+      if (!logo) return;
+      new IntersectionObserver(entries => {
+        entries.forEach(e =>
+          e.isIntersecting
+            ? logo.classList.add("playing")
+            : logo.classList.remove("playing")
+        );
+      }, { threshold: 0.5 }).observe(logo);
+    });
+  </script>
+
+  <!-- Core JS logic: splash fade, form validation, etc. -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

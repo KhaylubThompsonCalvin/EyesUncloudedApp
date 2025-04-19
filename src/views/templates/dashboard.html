@@ -1,0 +1,76 @@
+<!--
+ File: dashboard.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Behavioral Engine
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   This is the central interface of symbolic perception training.
+
+   The dashboard functions as the user’s inner sanctum—a ritual hub where they
+   document emotion-tagged insights, review strategic broadcasts, and craft reusable
+   wisdom structures. It tracks behavioral evolution across time and role identity.
+
+   Functionally:
+   • Displays flash feedback upon return
+   • Offers symbolic calls-to-action: Post Insight, Insight Archive, Template Builder
+   • Will evolve with perception level, virtue affinity, and legacy metrics
+-->
+   
+{% extends "base.html" %}
+
+{% block title %}Eyes Unclouded – Legacy Dashboard{% endblock %}
+{% block header %}Perceptual Dashboard{% endblock %}
+
+{% block content %}
+  <div class="container dashboard">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="container">
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+              <strong>{{ message }}</strong>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h2>Welcome back, {{ username }}. 👁️‍🗨️</h2>
+    <p class="intro-text">
+      You’ve entered the domain of reflection. This space evolves with your perception.
+      Document insights, recognize patterns, and refine your strategic thinking.
+    </p>
+
+    <div class="stats">
+      <div class="card">
+        <h3>
+          <i class="material-icons">visibility</i>
+          <a href="{{ url_for('notification.notifications') }}">Post Insight</a>
+        </h3>
+        <p>Craft a symbolic message, attach optional video, and log emotion or virtue.</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <i class="material-icons">history</i>
+          <a href="{{ url_for('notification.notification_log') }}">Insight Archive</a>
+        </h3>
+        <p>Review previously logged revelations and any attached video evidence.</p>
+      </div>
+
+      <div class="card">
+        <h3>
+          <i class="material-icons">article</i>
+          <a href="{{ url_for('template.create_template') }}">Design Template</a>
+        </h3>
+        <p>Build reusable narrative blueprints. Encode virtue or deception structures.</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+

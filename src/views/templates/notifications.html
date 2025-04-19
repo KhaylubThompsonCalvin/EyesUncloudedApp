@@ -1,0 +1,144 @@
+<!--
+ File: notifications.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Legacy Broadcast System
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   This interface allows users to broadcast symbolic notifications—Perception Signals—
+   into the Eyes Unclouded system.
+
+   Each broadcast includes:
+   • A strategic title and insight message
+   • Tagging by virtue and emotion
+   • Optional video evidence (behavioral analysis or visual proof)
+   • System logs to archive sender identity and timestamp
+
+   These entries form the user’s strategic archive, building their perception profile,
+   sharpening insight recall, and evolving their symbolic Role’s journey.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Signal Beacon – Eyes Unclouded{% endblock %}
+{% block header %}Broadcast Strategic Signal{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  {# Flash messages: display success/error after signal submission #}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">
+          <strong>{{ message }}</strong>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {# Broadcast form: users transmit encoded insights into the system #}
+  <form
+    action="{{ url_for('notification.notifications') }}"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <!-- Strategic title (headline for the transmission) -->
+    <label for="title">Signal Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <!-- Main content: the symbolic insight, reflection, or warning -->
+    <label for="message">Strategic Message:</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
+
+    <!-- Virtue alignment tags: helps train perception scoring and symbolic sorting -->
+    <label for="virtue_tag">Virtue Alignment:</label>
+    <select id="virtue_tag" name="virtue_tag">
+      <option value="wisdom">Wisdom</option>
+      <option value="honor">Honor</option>
+      <option value="adaptability">Adaptability</option>
+      <option value="restraint">Restraint</option>
+      <option value="clarity">Clarity</option>
+    </select>
+
+    <!-- Emotional tone tags: how this signal should be interpreted emotionally -->
+    <label for="emotion_tag">Emotion Tone:</label>
+    <select id="emotion_tag" name="emotion_tag">
+      <option value="neutral">Neutral</option>
+      <option value="urgent">Urgent</option>
+      <option value="reflective">Reflective</option>
+      <option value="inspiring">Inspiring</option>
+      <option value="critical">Critical</option>
+    </select>
+
+    <!-- Optional video upload: visual reinforcement, microexpression evidence, symbolic action -->
+    <label for="video">Optional Video Evidence:</label>
+    <input type="file" id="video" name="video" accept="video/*">
+
+    <!-- Submit the broadcast into the archive -->
+    <button type="submit">
+      <i class="material-icons">send</i> Transmit Signal
+    </button>
+  </form>
+
+  <hr>
+
+  <!-- Past broadcasts: show user contributions and insights stored in the archive -->
+  <h2>Past Strategic Signals</h2>
+  {% if notifications %}
+    <div class="notifications-table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Message</th>
+            <th>Virtue</th>
+            <th>Emotion</th>
+            <th>Video</th>
+            <th>Sent By</th>
+            <th>Sent At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for note in notifications %}
+            <tr>
+              <td>{{ note.title }}</td>
+              <td>{{ note.message }}</td>
+              <td>{{ note.virtue_tag }}</td>
+              <td>{{ note.emotion_tag }}</td>
+              <td>
+                {% if note.video %}
+                  <video width="200" controls>
+                    <source
+                      src="{{ url_for('static',
+                          filename='uploads/videos/' ~ note.video) }}"
+                      type="video/{{ note.video.rsplit('.',1)[1] }}">
+                    Your browser doesn’t support embedded videos.
+                  </video>
+                {% else %}
+                  &mdash;
+                {% endif %}
+              </td>
+              <td>{{ note.createdBy }}</td>
+              <td>{{ note.sent_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No signals have been broadcast yet.</p>
+  {% endif %}
+
+  <!-- Return path: symbolic re-entry to the Perception Dashboard -->
+  <p style="margin-top: 20px;">
+    <a href="{{ url_for('auth.dashboard') }}">Return to the Archive</a>
+  </p>
+</div>
+{% endblock %}
+
+
+
+
+
+

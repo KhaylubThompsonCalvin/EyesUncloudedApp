@@ -1,0 +1,47 @@
+<!--
+ File: index.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Legacy Interface
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/16/2025
+ Description:
+   The ceremonial landing page for Eyes Unclouded.
+
+   This screen welcomes all users—new or returning—with an invitation to begin
+   the journey of perception refinement. It symbolizes the threshold of awareness
+   before Role selection, virtue tracking, or strategic reflection occurs.
+
+   Functionally:
+   • Extends the base layout and uses a custom header and icon
+   • Offers a poetic call-to-action that links to the login portal
+   • Represents the "surface layer" before the symbolic system activates
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Eyes Unclouded – Home{% endblock %}
+
+{% block header %}
+  <!-- Symbolic page header: cognition icon + narrative title -->
+  <i class="material-icons">psychology</i>
+  Eyes Unclouded – Legacy of Awareness
+{% endblock %}
+
+{% block content %}
+  <section class="intro-section">
+
+    <!-- Welcome message: the first narrative hook in the user’s legacy arc -->
+    <p class="intro-text">
+      Welcome, Observer. Begin your journey to refine perception and master strategy.
+    </p>
+
+    <!-- Action button: takes user toward authentication and Role activation -->
+    <div class="call-to-action">
+      <a href="{{ url_for('auth.login') }}" class="btn-primary">
+        <i class="material-icons">login</i> Begin Your Ascent
+      </a>
+    </div>
+
+  </section>
+{% endblock %}
+

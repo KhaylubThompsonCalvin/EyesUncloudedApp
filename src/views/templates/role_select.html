@@ -1,0 +1,69 @@
+<!--
+ File: role_select.html
+ Course: CIS 234A – Real World Programming
+ Project: Eyes Unclouded App – Role Selection Interface
+ Author: Khaylub Thompson‑Calvin
+ Date: 04/17/2025
+ Description:
+   The symbolic selection screen where users choose their Role Type.
+
+   Each role represents a perceptual lens—Seeker, Strategist, Cipher, Observer, Mentor, Warden—
+   through which users will interpret the world within the Eyes Unclouded system.
+   This moment marks the beginning of their symbolic journey.
+
+   Functionally:
+   • Displays each role with a symbolic icon, description, and preview audio
+   • Plays unique audio introductions using <audio> elements
+   • Triggers autoplay compliance by unmuting all audio after first click
+   • Will later pass the selected Role to registration or onboarding logic
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Choose Your Role – Eyes Unclouded{% endblock %}
+
+{% block content %}
+  <!-- Role prompt: symbolic question to initiate the user's perceptual identity -->
+  <h2>Who will you become?</h2>
+
+  <!-- Loop through each role and render its card -->
+  <div class="roles-container">
+    {% for role in roles %}
+      <div class="role-card">
+        <!-- Role title: icon + name -->
+        <h3>{{ role.symbol }} {{ role.name }}</h3>
+
+        <!-- Description of the role’s archetypal function -->
+        <p>{{ role.description }}</p>
+
+        <!-- Audio preview of the role’s voice (symbolic onboarding) -->
+        <audio
+          id="audio_{{ role.name }}"
+          controls
+          autoplay
+          muted
+        >
+          <source
+            src="{{ url_for('static', filename='audio/Role_' ~ role.name ~ '.mp3') }}"
+            type="audio/mp3"
+          >
+          Your browser does not support audio playback.
+        </audio>
+
+        <!-- Selection button (not yet wired to form logic) -->
+        <button>Select {{ role.name }}</button>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    // On first user interaction, unmute all role audio (autoplay policy workaround)
+    document.addEventListener("click", () => {
+      document.querySelectorAll("audio").forEach(audio => {
+        audio.muted = false;
+      });
+    }, { once: true });
+  </script>
+{% endblock %}
+
+
