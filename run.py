@@ -20,13 +20,19 @@
 #   • Mode: Debug = True
 # ==============================================================================
 
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env
+
 from app import app
+
 
 def main():
     """Ritual Start – Boot the Eyes Unclouded Flask server."""
     print("[INFO] Starting Eyes Unclouded App at http://127.0.0.1:7777")
     app.run(port=7777, debug=True)
 
+
 # Pythonic entry condition: only executes when run directly
 if __name__ == "__main__":
     main()
+

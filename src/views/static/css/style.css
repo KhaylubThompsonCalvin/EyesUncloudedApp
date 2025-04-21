@@ -1,35 +1,10 @@
-/*
- ==============================================================================
- File: style.css
- Course: CIS 234A – Real World Programming
- Project: Eyes Unclouded App – Behavioral Interface System
- Author: Khaylub Thompson‑Calvin
- Date: 04/16/2025
- ==============================================================================
- Description:
-   This stylesheet defines the visual identity and interface logic of the
-   Eyes Unclouded App. It is vision-themed, designed to feel alive—like
-   a training vessel for perception, virtue alignment, and symbolic mastery.
-
-   Aesthetic Philosophy:
-   • Dark mode inspired by deep consciousness and nebula aesthetics
-   • Emerald and aqua accent tones (virtue/energy)
-   • Text clarity for emotional logs and symbolic storytelling
-   • Responsive design and future-ready 3D extensibility
-
-   Core Functional Zones:
-   • Base Layout + Container Grid
-   • Sigil Animations + Hero Sections
-   • Form Interfaces for Logs, Templates, and Registration
-   • Flash Message Feedback System
-   • Notification Log Tables
-   • Footer with Repository Link
-   • Responsive Media Query (≤768px)
-
-   This CSS file is the skin of the symbolic engine—
-   visualizing legacy, clarity, and emotional resonance.
-==============================================================================
-*/
+/* ==============================================================================
+   File: style.css
+   Course: CIS 234A – Real World Programming
+   Project: Eyes Unclouded App – Behavioral Interface System
+   Author: Khaylub Thompson‑Calvin
+   Date: 04/16/2025
+   ============================================================================== */
 
 /* Global Reset */
 *, *::before, *::after {
@@ -48,7 +23,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle shimmer background for a living interface */
+/* Subtle shimmer background */
 body::before {
   content: "";
   position: absolute;
@@ -63,7 +38,7 @@ body::before {
 }
 @keyframes bgShimmer {
   from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  to   { transform: rotate(360deg); }
 }
 
 /* Container Layout */
@@ -76,7 +51,7 @@ body::before {
   padding: 2rem;
   background: #12181d;
   border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0, 255, 204, 0.07);
+  box-shadow: 0 0 25px rgba(0,255,204,0.07);
 }
 
 /* Header */
@@ -95,11 +70,9 @@ header.main-header {
 
 .logo-img {
   width: 180px;
-  height: auto;
   margin-bottom: 1rem;
   transition: transform 0.3s ease-in-out;
 }
-
 .logo-img:hover {
   transform: scale(1.05);
 }
@@ -121,9 +94,8 @@ header.main-header {
   border-top: 1px solid #222;
   border-bottom: 1px solid #222;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 255, 204, 0.05);
+  box-shadow: 0 2px 8px rgba(0,255,204,0.05);
 }
-
 .main-nav ul {
   display: flex;
   justify-content: center;
@@ -132,7 +104,6 @@ header.main-header {
   padding: 1rem 0;
   gap: 1.5rem;
 }
-
 .main-nav a {
   color: #00ffc3;
   text-decoration: none;
@@ -143,18 +114,16 @@ header.main-header {
   gap: 6px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
-
 .main-nav a:hover {
   color: #ffee58;
   transform: translateY(-2px);
 }
-
 .material-icons {
   font-size: 1.3em;
   vertical-align: middle;
 }
 
-/* Hero Section: full-width box with breathing animation */
+/* Hero Section */
 .hero-logo {
   width: 100%;
   height: 40vh;
@@ -163,21 +132,18 @@ header.main-header {
   border-radius: 10px;
   overflow: hidden;
 }
-
 .hero-logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
   animation: zoomPulse 6s ease-in-out infinite;
 }
-
 @keyframes zoomPulse {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.05); }
+  0%,100% { transform: scale(1); }
+  50%     { transform: scale(1.05); }
 }
 
-/* Fade‑out animation for text when audio ends */
+/* Fade-out utility */
 .fade-out {
   animation: fadeOut 2s ease forwards;
 }
@@ -191,14 +157,10 @@ main {
   text-align: center;
   padding: 1.5rem;
 }
-
 main h2,
-main p,
-main .highlight-btn {
-  /* Mark these as fade-on-audio targets */
+main p {
   will-change: opacity;
 }
-
 main p {
   color: #a8bfc9;
   font-size: 1.15em;
@@ -212,18 +174,15 @@ form {
   background: #1d262c;
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 255, 204, 0.05);
+  box-shadow: 0 0 20px rgba(0,255,204,0.05);
 }
-
 label {
   display: block;
   margin-top: 1rem;
   font-weight: bold;
   color: #8ecae6;
 }
-
-input,
-textarea {
+input, textarea {
   width: 100%;
   padding: 12px;
   margin-top: 0.5rem;
@@ -233,15 +192,11 @@ textarea {
   color: #e2f1f8;
   transition: border 0.3s ease;
 }
-
-input:focus,
-textarea:focus {
+input:focus, textarea:focus {
   border-color: #00ffc3;
   outline: none;
 }
-
-button,
-input[type="submit"] {
+button, input[type="submit"] {
   margin-top: 1.5rem;
   background: linear-gradient(to right, #20e3b2, #2cccff);
   color: #fff;
@@ -252,9 +207,7 @@ input[type="submit"] {
   cursor: pointer;
   transition: background 0.4s ease, transform 0.2s ease;
 }
-
-button:hover,
-input[type="submit"]:hover {
+button:hover, input[type="submit"]:hover {
   background: linear-gradient(to right, #2cccff, #20e3b2);
   transform: scale(1.02);
 }
@@ -268,18 +221,16 @@ input[type="submit"]:hover {
   border-radius: 6px;
   font-weight: bold;
 }
-
 .flash-message.success {
   background: #2e7d32;
   color: #c8e6c9;
 }
-
 .flash-message.error {
   background: #c62828;
   color: #ffebee;
 }
 
-/* Notification Log Table Box */
+/* Notification Log Table */
 .notifications-table-wrapper {
   width: 100%;
   background: #1d262c;
@@ -288,23 +239,19 @@ input[type="submit"]:hover {
   overflow-x: auto;
   margin-top: 2rem;
 }
-
 .notifications-table-wrapper table {
   width: 100%;
   border-collapse: collapse;
 }
-
 .notifications-table-wrapper th,
 .notifications-table-wrapper td {
   padding: 0.75rem;
   border: 1px solid #333;
   text-align: left;
 }
-
 .notifications-table-wrapper tr:nth-child(even) {
   background: #0f1c24;
 }
-
 .notifications-table-wrapper th {
   background: #203a43;
   color: #fff;
@@ -320,17 +267,15 @@ footer {
   color: #9aa3a8;
   font-size: 0.9em;
 }
-
 footer a {
   color: #00ffc3;
   text-decoration: none;
 }
-
 footer a:hover {
   text-decoration: underline;
 }
 
-/* Responsive Layout */
+/* Responsive */
 @media screen and (max-width: 768px) {
   .container {
     width: 95%;
@@ -344,5 +289,124 @@ footer a:hover {
   }
 }
 
+/* ==============================================================================
+   Chat window styling for AI Speaker Box
+   ============================================================================== */
+.chat-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.chat-window {
+  background: #1d262c;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 1rem;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.chat-window .message {
+  padding: 0.5rem 0.75rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+.chat-window .user {
+  background: #203a43;
+  color: #fff;
+  align-self: flex-end;
+}
+.chat-window .ai {
+  background: #0f1c24;
+  color: #a8bfc9;
+  align-self: flex-start;
+}
+.chat-form textarea {
+  width: 100%;
+  resize: none;
+}
+.chat-form button {
+  margin-top: 0.5rem;
+}
 
-
+/* ==============================================================================
+   Role & Class Reveal – Special Styling for Archetypal Onboarding
+   ============================================================================== */
+   .class-reveal {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: radial-gradient(ellipse at center, #001f1f 0%, #0b0f11 100%);
+    color: #d3f2ff;
+    border-radius: 16px;
+    box-shadow: 0 0 35px rgba(0,255,204,0.1);
+  }
+  .class-reveal h1 {
+    font-size: 2.8rem;
+    color: #00ffc3;
+    margin-bottom: 1rem;
+  }
+  .class-reveal p {
+    font-size: 1.2rem;
+    color: #a8d7e6;
+    margin-top: 0.5rem;
+  }
+  
+  /* Audio Player: clean UI */
+  audio::-webkit-media-controls-panel {
+    background-color: #0f2027;
+    color: #00ffc3;
+  }
+  audio {
+    margin-top: 1rem;
+    width: 100%;
+    border: 1px solid #00ffc3;
+    border-radius: 8px;
+  }
+  
+  /* ==============================================================================
+     Milestone Log – Symbolic Timeline / Table
+     ============================================================================== */
+  .milestone-log {
+    margin-top: 3rem;
+    background: #1d262c;
+    padding: 1.5rem;
+    border-radius: 10px;
+  }
+  .milestone-log table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+  .milestone-log th, .milestone-log td {
+    padding: 0.75rem;
+    border: 1px solid #333;
+    text-align: center;
+  }
+  .milestone-log th {
+    background-color: #22343c;
+    color: #ffffff;
+  }
+  .milestone-log td {
+    background-color: #0f1c24;
+    color: #dce6eb;
+  }
+  .milestone-log tr:hover {
+    background-color: #14222c;
+  }
+  
+  /* Chart Section Enhancements */
+  .chart-section {
+    background-color: #12181d;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+    box-shadow: 0 0 20px rgba(0,255,204,0.07);
+  }
+  .chart-section img {
+    border-radius: 8px;
+    max-width: 100%;
+  }
+  

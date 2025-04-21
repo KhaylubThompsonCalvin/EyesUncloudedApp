@@ -127,6 +127,6 @@ python run.py
 
 This app is part of a greater symbolic narrative & legacy design — integrating myth, strategy, and emotional intelligence into a software artifact meant for future generations.
 
-> “War is the father of all. But perception… is the mother of legacy.”  
+> “”  
 > — _Eyes Unclouded_
 > "@ | Set-Content "README.md"

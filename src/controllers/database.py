@@ -32,6 +32,9 @@ load_dotenv()
 client = MongoClient(os.getenv("MONGO_URI"))
 db = client.get_default_database()  # Uses the default DB from connection string
 
+# Debug connection confirmation
+print(f"[✓] Connected to MongoDB database: {db.name}")
+
 # ------------------------------------------------------------------------------
 # Collection Accessors – Modular, Readable, Extendable
 # ------------------------------------------------------------------------------
@@ -66,5 +69,6 @@ def get_templates():
 # def get_collection(name: str):
 #     """Generic collection getter for future dynamic utilities."""
 #     return db[name]
+
 
 

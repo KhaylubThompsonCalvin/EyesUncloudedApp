@@ -1,0 +1,29 @@
+<!-- emotion_log.html -->
+{% extends "base.html" %}
+{% block title %}Emotion Log{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Emotion Observations</h2>
+
+  {% if logs %}
+    <div class="row">
+      {% for log in logs %}
+        <div class="col-md-4 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-capitalize">{{ log.emotion }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ log.timestamp }}</h6>
+              <p class="card-text">{{ descriptions[log.emotion] }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      No emotion logs found.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

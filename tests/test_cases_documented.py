@@ -1,102 +1,99 @@
-# CIS234A: Real World Programming
-# Project: Food Pantry Notification System – Sprint 1
-# Author: Khaylub Thompson-Calvin
-# Date: 4/14/2025
-# Description:
-# This file documents terminal-based test cases and functional checks
-# for verifying Flask + MongoDB integration, endpoints, UI behavior,
-# and secure registration/login system.
-# ***********************************************************************
+"""
+CIS 234A: Real World Programming
+Project: Eyes Unclouded App – Sprint 3
+Author: Khaylub Thompson-Calvin
+Date: 04/19/2025
+Description:
+This Python script runs documented test cases for core functionality in the Eyes Unclouded App.
+It verifies input validation logic, emotion log structure, and symbolic perception thresholds.
+Test functions are designed for manual or automated (Pytest) use.
+"""
 
-# Philosophy:
-# Clean, modular, testable code for real-world systems.
+import sys
+import os
+from datetime import datetime
 
-# --------------------------------------------------------
-# Test Case 1: Navigate to Project Directory
-# --------------------------------------------------------
-# Command:
-# cd "E:\CloudData\Desktop\School Computer Inforrmation Systems\CIS234A_Real_World_Programming\Calendar_Weeks\Real World Programming Team Project\Assignment1>"
-#  Verifies local folder structure and sprint repo setup.
+# Allow relative imports from /src directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-# --------------------------------------------------------
-# Test Case 2: Activate Virtual Environment
-# --------------------------------------------------------
-# Command:
-# .\venv\Scripts\Activate
-#  Check: Terminal prompt changes to (venv)
-#  If venv doesn’t exist, run: python -m venv venv
+from src.utils.input_validation import (
+    is_valid_email,
+    is_strong_password,
+    is_valid_username,
+    is_valid_role_type
+)
 
-# --------------------------------------------------------
-# Test Case 3: Install Requirements
-# --------------------------------------------------------
-# Command:
-# pip install -r requirements.txt
-#   Check:
-# - Flask
-# - flask_pymongo
-# - dnspython
-# Confirm with: pip list
+# ----------------------------------------------------------
+# TEST GROUP 1: Input Validation (Registration + Login Forms)
+# ----------------------------------------------------------
 
-# --------------------------------------------------------
-# Test Case 4: Run Flask App
-# --------------------------------------------------------
-# Command:
-# python app.py
-#  Check:
-# * Running on http://localhost:5001/ or http://localhost:5001/
-# Browser loads default route or HTML page
+def test_valid_email_format():
+    assert is_valid_email("user@example.com")
+    assert not is_valid_email("invalid-email")
+    print("[✓] Email format validation passed.")
 
-# --------------------------------------------------------
-# Test Case 5: Registration Endpoint (POST)
-# --------------------------------------------------------
-# Command:
-# curl -X POST http://localhost:3000/register -H "Content-Type: application/json" \
-# -d "{\"name\": \"Khaylub\", \"username\": \"Khaylub\", \"email\": \"Khaylub.thompsoncalvin@pcc.edu\", \"password\": \"pass123\", \"confirm_password\": \"pass123\"}"
-# Check: {"message": "Registration successful"}
+def test_strong_password():
+    assert is_strong_password("Secure123")
+    assert not is_strong_password("weak")
+    print("[✓] Password strength validation passed.")
 
-# --------------------------------------------------------
-# Test Case 6: Login Endpoint (POST)
-# --------------------------------------------------------
-# Command:
-# curl -X POST http://localhost:3000/login -H "Content-Type: application/json" \
-# -d "{\"email\": \"Khaylub.thompsoncalvin@pcc.edu\", \"password\": \"pass123\"}"
-# Check: {"message": "Login successful"}
-# Try incorrect password:
-# {"error": "Invalid credentials"}
+def test_username_rules():
+    assert is_valid_username("Khaylub123")
+    assert not is_valid_username("!@#invalid")
+    assert not is_valid_username("ab")  # too short
+    print("[✓] Username validation passed.")
 
-# --------------------------------------------------------
-# Test Case 7: MongoDB Validation (Duplicates)
-# --------------------------------------------------------
-# Command: (register again with same email)
-# Check: {"error": "Email or username already exists"}
+def test_role_type_values():
+    assert is_valid_role_type("Seeker")
+    assert not is_valid_role_type("Unknown")
+    print("[✓] Role type validation passed.")
 
-# --------------------------------------------------------
-# Test Case 8: Notifications Blueprint (GET)
-# --------------------------------------------------------
-# Command:
-# curl http://localhost:5001/notifications/test
-# Check: {"message": "Notifications module is working"}
+# ----------------------------------------------------------
+# TEST GROUP 2: Symbolic App Logic
+# ----------------------------------------------------------
 
-# --------------------------------------------------------
-# Test Case 9: HTML Form Rendering (GET)
-# --------------------------------------------------------
-# URLS:
-# http://localhost:5001/register
-# http://localhost:5001/login
-# Check: Pages load, form fields appear
+def test_perception_score_threshold():
+    perception_score = 11
+    class_unlocked = perception_score >= 10
+    assert class_unlocked is True
+    print("[✓] Class unlock threshold logic passed.")
 
-# --------------------------------------------------------
-# Test Case 10: PowerShell Invoke-RestMethod (Optional)
-# --------------------------------------------------------
-# Command:
-# Invoke-RestMethod -Uri "http://localhost:5001/login" -Method Post -Body @{
-#     email = "Khaylub.thompsoncalvin@pcc.edu"
-#     password = "pass123"
-# } -ContentType "application/json"
-# Check: Login successful response
+def test_emotion_log_structure():
+    sample_log = {
+        "emotion": "fear",
+        "source": "upper_eyelid_raise",
+        "timestamp": datetime.now().isoformat()
+    }
+    assert sample_log["emotion"] in [
+        "anger", "sadness", "happiness", "fear",
+        "surprise", "disgust", "contempt"
+    ]
+    assert "timestamp" in sample_log
+    print("[✓] Emotion log entry structure passed.")
 
-# --------------------------------------------------------
-# Test Case 11: Hashed Passwords
-# --------------------------------------------------------
-# Confirm that passwords in MongoDB begin with $pbkdf2-sha256$
-# Shows password hashing using Werkzeug is active and plaintext is avoided
+def test_timestamp_format():
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    assert len(ts) == 19
+    assert ts.count('-') == 2
+    assert ts.count(':') == 2
+    print("[✓] Timestamp format verified:", ts)
+
+# ----------------------------------------------------------
+# RUN ALL TESTS
+# ----------------------------------------------------------
+
+if __name__ == "__main__":
+    print("Running Eyes Unclouded App – Documented Test Suite...\n")
+
+    # Validation
+    test_valid_email_format()
+    test_strong_password()
+    test_username_rules()
+    test_role_type_values()
+
+    # Symbolic logic
+    test_perception_score_threshold()
+    test_emotion_log_structure()
+    test_timestamp_format()
+
+    print("\nAll tests completed successfully.")

@@ -1,0 +1,40 @@
+<!-- ============================================================================
+File: oracle.html
+Project: Eyes Unclouded App – Oracle Archive UI
+Author: Khaylub Thompson-Calvin
+Date: 2025-04-19
+Description:
+  Renders symbolic insights from emotion_log.json.
+  Displays most observed emotion and future AI-based pattern hooks.
+============================================================================ -->
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">The Oracle Archive</h2>
+
+  {% if logs %}
+    <div class="alert alert-primary text-center">
+      Most observed emotion: <strong class="text-uppercase">{{ summary[0] }}</strong>
+      ({{ summary[1] }} times)
+    </div>
+
+    <div class="row">
+      {% for log in logs %}
+        <div class="col-md-4 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-capitalize">{{ log.emotion }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ log.timestamp }}</h6>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      No data in Oracle Archive yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

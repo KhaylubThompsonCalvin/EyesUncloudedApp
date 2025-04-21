@@ -1,0 +1,47 @@
+﻿<!-- ================================================================================
+File: src/views/templates/maximus_analysis.html
+Course: CIS 234A – Real World Programming
+Project: Eyes Unclouded App – Immersion Engine – Audio Playback
+Author: Khaylub Thompson-Calvin
+Date: 04/19/2025
+=================================================================================
+Description:
+  Renders scene metadata, insight text, and auto-playing audio.
+  Displays a clean “Play Insight” audio control, no extra button.
+================================================================================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maximus Analysis – {{ scene.chapter }}</title>
+</head>
+<body>
+  <h1>Scene: {{ scene.chapter }}</h1>
+  <p><strong>Expression:</strong> {{ scene.expression | capitalize }}</p>
+  <p><strong>Virtue Test:</strong> {{ scene.virtue_test | capitalize }}</p>
+
+  <h2>Maximus Insight</h2>
+  <p>{{ insight }}</p>
+
+  <!-- Audio Player with clear label -->
+  <h3>🔊 Play Insight</h3>
+  <audio controls autoplay id="maximus-audio">
+    <source src="{{ audio_path }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const audio = document.getElementById('maximus-audio');
+      if (audio) {
+        audio.play().catch(function (e) {
+          console.warn('Autoplay blocked. User must manually click Play.', e);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

@@ -25,17 +25,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>{% block title %}Eyes Unclouded{% endblock %}</title>
 
   <!-- Fonts & Material Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap"
+    rel="stylesheet"
+  >
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  >
 
   <!-- Core Stylesheet -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+  />
 
   <!-- Symbolic Favicon (Sigil) -->
-  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+  <link
+    rel="icon"
+    type="image/x-icon"
+    href="{{ url_for('static', filename='images/favicon.ico') }}"
+  />
+
+  {# Per‑page additions (extra meta, CSS, etc.) #}
+  {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -56,10 +73,9 @@
       </div>
     </header>
 
-    <!-- Navigation: Role-aware links (changes based on session) -->
+    <!-- Navigation: Role‑aware links -->
     <nav class="main-nav">
       <ul class="nav-links">
-        <!-- Splash/Insight -->
         <li>
           <a href="{{ url_for('main.splash') }}">
             <i class="material-icons">visibility</i> Insight
@@ -67,7 +83,6 @@
         </li>
 
         {% if session.get('user_id') %}
-          <!-- Logged‑in: Broadcast & Archive & Exit -->
           <li>
             <a href="{{ url_for('notification.notifications') }}">
               <i class="material-icons">send</i> Post Insight
@@ -84,7 +99,6 @@
             </a>
           </li>
         {% else %}
-          <!-- Not logged‑in: Enter -->
           <li>
             <a href="{{ url_for('auth.login') }}">
               <i class="material-icons">login</i> Enter
@@ -92,7 +106,6 @@
           </li>
         {% endif %}
 
-        <!-- Common protected: Dashboard, Templates -->
         <li>
           <a href="{{ url_for('auth.dashboard') }}">
             <i class="material-icons">dashboard</i> Dashboard
@@ -106,10 +119,10 @@
       </ul>
     </nav>
 
-    <!-- Optional Page Hero Section (custom per view) -->
+    <!-- Optional Hero Section -->
     {% block hero %}{% endblock %}
 
-    <!-- Primary Page Header & Content Area -->
+    <!-- Main Content -->
     <main>
       <h2>{% block header %}Welcome to Your Inner Library{% endblock %}</h2>
       {% block content %}
@@ -117,47 +130,39 @@
       {% endblock %}
     </main>
 
-    <!-- Footer with symbolic copyright -->
+    <!-- Footer -->
     <footer>
       <p>&copy; 2025 Eyes Unclouded Behavioral Engine</p>
       <p>
-        <a href="https://github.com/KhaylubThompsonCalvin" target="_blank">
+        <a
+          href="https://github.com/KhaylubThompsonCalvin"
+          target="_blank"
+        >
           Explore Legacy Repository
         </a>
       </p>
     </footer>
   </div>
 
-  <!-- Scroll-triggered “beat” animation for logo -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const logo = document.querySelector(".logo-img.scroll-beat");
-      if (!logo) return;
-      new IntersectionObserver(entries => {
-        entries.forEach(e =>
-          e.isIntersecting
-            ? logo.classList.add("playing")
-            : logo.classList.remove("playing")
-        );
-      }, { threshold: 0.5 }).observe(logo);
-    });
-  </script>
+  {# Core JS logic can now be overridden/appended by child templates #}
+  {% block scripts %}
+    <script>
+      // Scroll‑triggered “beat” animation for logo
+      document.addEventListener("DOMContentLoaded", () => {
+        const logo = document.querySelector(".logo-img.scroll-beat");
+        if (!logo) return;
+        new IntersectionObserver(entries => {
+          entries.forEach(e =>
+            e.isIntersecting
+              ? logo.classList.add("playing")
+              : logo.classList.remove("playing")
+          );
+        }, { threshold: 0.5 }).observe(logo);
+      });
+    </script>
 
-  <!-- Core JS logic: splash fade, form validation, etc. -->
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- Core JS logic: splash fade, form validation, etc. -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% endblock %}
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

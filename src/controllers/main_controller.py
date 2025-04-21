@@ -11,9 +11,7 @@
 #     • Root redirection (/) → symbolic entrypoint (/splash)
 #     • Splash animation and onboarding prompt
 #     • Temporary Class Reveal testing interface for development
-#
-#   The splash page acts as the mythic “first contact,” while the class reveal is
-#   part of the evolving onboarding phase where users uncover hidden archetypes.
+#     • Real‑time micro‑expression trial launcher
 # ==============================================================================
 
 from flask import Blueprint, render_template, redirect, url_for
@@ -22,6 +20,7 @@ from flask import Blueprint, render_template, redirect, url_for
 # Blueprint Setup
 # ------------------------------------------------------------------------------
 main_bp = Blueprint("main", __name__)
+
 
 # ------------------------------------------------------------------------------
 # Route: / → Redirect to Splash Gateway
@@ -34,6 +33,7 @@ def index():
     through the Eyes Unclouded gateway experience.
     """
     return redirect(url_for("main.splash"))
+
 
 # ------------------------------------------------------------------------------
 # Route: /splash → Welcome & Audio Prompt Screen
@@ -48,6 +48,7 @@ def splash():
     """
     return render_template("splash.html")
 
+
 # ------------------------------------------------------------------------------
 # Route: /reveal → Class Archetype Reveal (Testing Only)
 # ------------------------------------------------------------------------------
@@ -57,15 +58,29 @@ def class_reveal_test():
     TEMPORARY route used for testing the Class Reveal interface.
     Eventually, this will be gated by perception scores and virtue logs.
     """
-    return render_template("class_reveal.html", user={
-        "class_name": "The Architect",
-        "class_title": "Queen of the Eagle Order",
-        "animal_order": "Eagle",
-        "class_description": (
-            "You see patterns where others see chaos. "
-            "You are tasked with vision, precision, and legacy. "
-            "This title was not given — it was earned."
-        )
-    })
+    return render_template(
+        "class_reveal.html",
+        user={
+            "class_name": "The Architect",
+            "class_title": "Queen of the Eagle Order",
+            "animal_order": "Eagle",
+            "class_description": (
+                "You see patterns where others see chaos. "
+                "You are tasked with vision, precision, and legacy. "
+                "This title was not given — it was earned."
+            ),
+        },
+    )
 
+
+# ------------------------------------------------------------------------------
+# Route: /observe_trial → Real‑Time Observation Trial
+# ------------------------------------------------------------------------------
+@main_bp.route("/observe_trial")
+def observe_trial():
+    """
+    Launches the real‑time observation mode where the user can
+    log micro‑expressions in a live trial.
+    """
+    return render_template("observe_trial.html")
 

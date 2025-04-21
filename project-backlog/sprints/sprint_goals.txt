@@ -1,0 +1,19 @@
+Sprint Goals – Eyes Unclouded App
+
+Sprint 1:
+- Setup Flask + MongoDB
+- Implement Role Type registration (Seeker, Strategist, etc.)
+- Embed dynamic audio onboarding with ElevenLabs
+- Style templates and dashboard framework
+
+Sprint 2:
+- Add microexpression decoder CLI
+- Create emotion log visualization route
+- Log perception streaks and timestamp range
+- Connect emotion data to Role-based dashboard logic
+
+Sprint 3:
+- Add Class reveal logic (triggered by streaks or virtue thresholds)
+- Add Oracle Archive input/upload function
+- Display mentor wisdom insights by Role type
+- Secure API access and legacy vault placeholder

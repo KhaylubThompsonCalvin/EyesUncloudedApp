@@ -1,0 +1,18 @@
+﻿[
+  {
+    "scene_id": "council_meeting_02",
+    "expression": "contempt",
+    "virtue_test": "humility",
+    "chapter": "The Hidden Blade",
+    "notes": "Character shows curled lip and raised chin before interrupting."
+  },
+  {
+    "scene_id": "festival_river_joy",
+    "expression": "joy",
+    "virtue_test": "gratitude",
+    "chapter": "The Festival of the River",
+    "notes": "El-yah watches children dancing in the riverlight. Her smile is pure but distant.",
+    "audio_file": "Maximus_Joy_Gratitude.mp3",
+    "insight": "Do not trust every smile, for even a liar may laugh. Joy is a mask the cunning wear to disarm the watchful. True strength lies not in fleeting pleasure—but in the quiet, enduring weight of gratitude."
+  }
+]

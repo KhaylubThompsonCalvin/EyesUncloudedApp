@@ -1,76 +1,173 @@
-<!--
- File: dashboard.html
- Course: CIS 234A – Real World Programming
- Project: Eyes Unclouded App – Behavioral Engine
- Author: Khaylub Thompson‑Calvin
- Date: 04/17/2025
- Description:
-   This is the central interface of symbolic perception training.
+{# 
+  File: dashboard.html
+  Course: CIS 234A – Real World Programming
+  Project: Eyes Unclouded App – Behavioral Engine
+  Author: Khaylub Thompson‑Calvin
+  Date: 04/17/2025
+  Description:
+    This is the central interface of symbolic perception training.
 
-   The dashboard functions as the user’s inner sanctum—a ritual hub where they
-   document emotion-tagged insights, review strategic broadcasts, and craft reusable
-   wisdom structures. It tracks behavioral evolution across time and role identity.
+    The dashboard functions as the user’s inner sanctum—a ritual hub where they
+    document emotion‑tagged insights, review strategic broadcasts, and craft reusable
+    wisdom structures. It tracks behavioral evolution across time and role identity.
 
-   Functionally:
-   • Displays flash feedback upon return
-   • Offers symbolic calls-to-action: Post Insight, Insight Archive, Template Builder
-   • Will evolve with perception level, virtue affinity, and legacy metrics
--->
-   
-{% extends "base.html" %}
+    Functionally:
+    • Displays flash feedback upon return
+    • Offers symbolic calls‑to‑action: Post Insight, Insight Archive, Template Builder
+    • Surfaces new micro‑expression features: Emotion Log, Oracle Insight, Observe Trial
+    • Embeds training‑set chart to visualize sample distribution
+    • Will evolve with perception level, virtue affinity, and legacy metrics
+ #}
 
-{% block title %}Eyes Unclouded – Legacy Dashboard{% endblock %}
-{% block header %}Perceptual Dashboard{% endblock %}
+ {% extends "base.html" %}
 
-{% block content %}
-  <div class="container dashboard">
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="container">
-          {% for category, message in messages %}
-            <div class="flash-message {{ category }}">
-              <strong>{{ message }}</strong>
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-
-    <h2>Welcome back, {{ username }}. 👁️‍🗨️</h2>
-    <p class="intro-text">
-      You’ve entered the domain of reflection. This space evolves with your perception.
-      Document insights, recognize patterns, and refine your strategic thinking.
-    </p>
-
-    <div class="stats">
-      <div class="card">
-        <h3>
-          <i class="material-icons">visibility</i>
-          <a href="{{ url_for('notification.notifications') }}">Post Insight</a>
-        </h3>
-        <p>Craft a symbolic message, attach optional video, and log emotion or virtue.</p>
-      </div>
-
-      <div class="card">
-        <h3>
-          <i class="material-icons">history</i>
-          <a href="{{ url_for('notification.notification_log') }}">Insight Archive</a>
-        </h3>
-        <p>Review previously logged revelations and any attached video evidence.</p>
-      </div>
-
-      <div class="card">
-        <h3>
-          <i class="material-icons">article</i>
-          <a href="{{ url_for('template.create_template') }}">Design Template</a>
-        </h3>
-        <p>Build reusable narrative blueprints. Encode virtue or deception structures.</p>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-
-
-
-
+ {% block title %}Eyes Unclouded – Legacy Dashboard{% endblock %}
+ {% block header %}Perceptual Dashboard{% endblock %}
+ 
+ {% block content %}
+ <div class="container dashboard">
+ 
+   {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+       <div class="container">
+         {% for category, message in messages %}
+           <div class="flash-message {{ category }}">
+             <strong>{{ message }}</strong>
+           </div>
+         {% endfor %}
+       </div>
+     {% endif %}
+   {% endwith %}
+ 
+   <h2>Welcome back, {{ username }}. 👁️‍톪️</h2>
+   <p class="intro-text">
+     You’ve entered the domain of reflection. This space evolves with your perception.
+     Document insights, recognize patterns, and refine your strategic thinking.
+   </p>
+ 
+   <div class="stats row">
+     <!-- Post Insight -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">visibility</i>
+             <a href="{{ url_for('notification.notifications') }}">Post Insight</a>
+           </h3>
+           <p>Craft a symbolic message, attach optional video, and log emotion or virtue.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Insight Archive -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">history</i>
+             <a href="{{ url_for('notification.notification_log') }}">Insight Archive</a>
+           </h3>
+           <p>Review previously logged revelations and any attached video evidence.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Template Builder -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">article</i>
+             <a href="{{ url_for('template.create_template') }}">Design Template</a>
+           </h3>
+           <p>Build reusable narrative blueprints. Encode virtue or deception structures.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Emotion Log -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">emoji_emotions</i>
+             <a href="{{ url_for('emotion_log.show_emotion_log') }}">Emotion Log</a>
+           </h3>
+           <p>Review your micro‑expression observations with timestamps and interpretations.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Oracle Insight -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">insights</i>
+             <a href="{{ url_for('oracle.oracle_insight') }}">Oracle Insight</a>
+           </h3>
+           <p>See an AI‑driven summary of your most common emotional patterns.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Observe Trial -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">visibility</i>
+             <a href="{{ url_for('main.observe_trial') }}">Observe Trial</a>
+           </h3>
+           <p>Launch the live observation mode to log micro‑expressions in real time.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Return to Splash -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">home</i>
+             <a href="{{ url_for('main.splash') }}">Return to Splash</a>
+           </h3>
+           <p>Replay the symbolic introduction and reflect on your beginning.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Class Reveal -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">stars</i>
+             <a href="{{ url_for('main.class_reveal') }}">Reveal Class</a>
+           </h3>
+           <p>Discover your legacy class based on symbolic perception criteria.</p>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Milestone Log -->
+     <div class="col-md-4 mb-4">
+       <div class="card h-100">
+         <div class="card-body">
+           <h3><i class="material-icons">timeline</i>
+             <a href="{{ url_for('main.milestone_log') }}">Milestone Log</a>
+           </h3>
+           <p>Track emotional patterns and reflective growth across sessions.</p>
+         </div>
+       </div>
+     </div>
+ 
+   </div>
+ 
+   <div class="chart-section mt-5 text-center">
+     <h4>Training Sample Distribution</h4>
+     <img
+       src="{{ url_for('static', filename='images/chart.png') }}"
+       alt="Microexpression image counts per emotion"
+       class="img-fluid"
+     />
+     <p class="small text-muted mt-2">
+       This chart shows how many example images exist for each emotion,
+       and will inform the difficulty of future trials.
+     </p>
+   </div>
+ 
+ </div>
+ {% endblock %}

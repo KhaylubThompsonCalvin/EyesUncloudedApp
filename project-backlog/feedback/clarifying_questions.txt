@@ -1,0 +1,9 @@
+Clarifying Questions – Eyes Unclouded App (Sprint 1–2)
+
+1. How will Role Type and Class distinctions affect dashboard functionality in Phase 2?
+2. What database triggers emotion log streaks (for Class reveal)?
+3. How should we format mentor audio guidance by Role Type?
+4. Do notifications tie into legacy vault conditions?
+5. What is the threshold for perception scoring logic?
+6. How are ElevenLabs audio files versioned per update?
+7. Should Oracle Archive insights be stored as both text and audio?

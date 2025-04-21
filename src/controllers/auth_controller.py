@@ -11,12 +11,9 @@
 #     • Login: authenticates and stores role-based session state.
 #     • Logout: clears session and exits system.
 #     • Dashboard: renders core hub of self-reflection and strategic tools.
-#
-#   Role Type logic connects to audio onboarding and future dashboard divergence.
-#   Session variables (`user_id`, `username`, `role_type`) act as the symbolic keys
-#   for unlocking perception-based features throughout the system.
 # ==============================================================================
 
+import os
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -25,19 +22,12 @@ from functools import wraps
 from .database import get_user_profiles
 from src.controllers.role_controller import ROLE_AUDIO  # Maps symbolic roles → audio onboarding
 
-# ------------------------------------------------------------------------------
-# Blueprint Setup
-# ------------------------------------------------------------------------------
 auth_bp = Blueprint('auth', __name__)
 
-# ------------------------------------------------------------------------------
-# Utility: Route Guard
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# Route Guard for Protected Routes
+# -------------------------------------------------------------------
 def login_required(f):
-    """
-    Wraps any route that requires authentication.
-    If user is not logged in, redirect to the login page with warning.
-    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
@@ -46,16 +36,11 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# ------------------------------------------------------------------------------
-# Route: /register – Create User Profile + Role Selection
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# /register – Symbolic Identity Creation
+# -------------------------------------------------------------------
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    """
-    GET: Display registration form with Role Type dropdown and overview audio.
-    POST: Validate form input, hash password, create new user document,
-          and redirect to login for onboarding.
-    """
     if request.method == 'POST':
         data = request.form
         if data['password'] != data['confirmPassword']:
@@ -70,80 +55,91 @@ def register():
             "role_type":         data.get('role_type', 'Seeker'),
             "learning_level":    int(data.get('learning_level', 1)),
             "perception_score":  0,
-            "virtue_affinity":   {},  # Will evolve through usage
+            "virtue_affinity":   {},
             "created_at":        datetime.utcnow()
         }
 
         try:
             get_user_profiles().insert_one(user)
+            print("[✓] Registration successful:", user["username"])
             flash("Registration successful! Please log in.", "success")
             return redirect(url_for('auth.login'))
         except Exception as e:
+            print("[×] Registration error:", str(e))
             flash(f"Registration failed: {e}", "danger")
             return redirect(url_for('auth.register'))
 
-    # GET: inject symbolic role options and audio metadata
     roles = list(ROLE_AUDIO.keys())
     overview_audio = 'Role_Overview.mp3'
-    return render_template('register.html',
-                           roles=roles,
-                           overview_audio=overview_audio)
+    return render_template('register.html', roles=roles, overview_audio=overview_audio)
 
-# ------------------------------------------------------------------------------
-# Route: /login – Authenticate User & Store Session
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# /login – Identity Verification
+# -------------------------------------------------------------------
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    GET: Display login form.
-    POST: Authenticate using email or username, store session data including:
-          user_id, username, and role_type.
-    """
     if request.method == 'POST':
         data = request.form
+        identifier = data['identifier']
+        password = data['password']
+
+        print(f"[DEBUG] Login attempt for: {identifier}")
+
         user = get_user_profiles().find_one({
             "$or": [
-                {"username": data['identifier']},
-                {"email": data['identifier']}
+                {"username": identifier},
+                {"email": identifier}
             ]
         })
-        if user and check_password_hash(user['password'], data['password']):
-            session['user_id']    = str(user['_id'])
-            session['username']   = user['username']
-            session['role_type']  = user.get('role_type', 'Seeker')  # fallback
+
+        if user:
+            print("[DEBUG] User found in DB:", user["username"])
+        else:
+            print("[DEBUG] No user matched the identifier.")
+
+        if user and check_password_hash(user['password'], password):
+            print("[✓] Password verified for:", user["username"])
+            session['user_id'] = str(user['_id'])
+            session['username'] = user['username']
+            session['role_type'] = user.get('role_type', 'Seeker')
             flash("Login successful!", "success")
             return redirect(url_for('auth.dashboard'))
 
         flash("Invalid credentials.", "danger")
+        print("[×] Login failed: Invalid credentials")
 
     return render_template('login.html')
 
-# ------------------------------------------------------------------------------
-# Route: /dashboard – Symbolic Core of the System
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# /dashboard – Strategic Hub
+# -------------------------------------------------------------------
 @auth_bp.route('/dashboard')
 @login_required
 def dashboard():
-    """
-    Render the user dashboard.
-    This hub evolves as perception logs and Role/Class mechanics mature.
-    """
-    return render_template('dashboard.html', username=session.get('username'))
+    chart_path = os.path.join("src", "views", "static", "images", "chart.png")
+    chart_exists = os.path.exists(chart_path)
+    return render_template(
+        'dashboard.html',
+        username=session.get('username'),
+        chart_exists=chart_exists
+    )
 
-# ------------------------------------------------------------------------------
-# Route: /logout – Exit the Behavioral Engine
-# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# /logout – Session Reset
+# -------------------------------------------------------------------
 @auth_bp.route('/logout')
 @login_required
 def logout():
-    """
-    Clear all session data and exit the Eyes Unclouded system.
-    """
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for('auth.login'))
 
-
-
-
-
+# -------------------------------------------------------------------
+# /debug-user – Diagnostic Route to Verify DB Access
+# -------------------------------------------------------------------
+@auth_bp.route('/debug-user')
+def debug_user():
+    user = get_user_profiles().find_one({"username": "HEWHOATETHESUN"})
+    if user:
+        return f"[✓] Found user: {user['username']}<br>Password: {user['password']}"
+    return "[×] User not found in current database."

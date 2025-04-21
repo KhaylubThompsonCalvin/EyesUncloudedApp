@@ -1,0 +1,60 @@
+{# File: src/views/templates/chat.html #}
+{% extends "base.html" %}
+
+{% block title %}Eyes Unclouded – AI Speaker{% endblock %}
+{% block header %}AI Speaker Box{% endblock %}
+{% block hero %}{% endblock %}
+
+{% block content %}
+  <div class="container chat-container">
+    <div id="chat-window" class="chat-window"></div>
+
+    <form id="chat-form" class="chat-form">
+      <textarea
+        id="chat-input"
+        rows="2"
+        placeholder="Type your message…"
+        required
+      ></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const form    = document.getElementById('chat-form');
+    const input   = document.getElementById('chat-input');
+    const windowEl = document.getElementById('chat-window');
+    const history = [
+      { role: 'system', content: 'You are the Oracle AI for Eyes Unclouded.' }
+    ];
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const userMsg = input.value.trim();
+      if (!userMsg) return;
+
+      // Display user message
+      windowEl.innerHTML += `<div class="message user">${userMsg}</div>`;
+      windowEl.scrollTop = windowEl.scrollHeight;
+      input.value = '';
+
+      history.push({ role: 'user', content: userMsg });
+
+      // Send to server
+      const res = await fetch('/chat/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history })
+      });
+      const data  = await res.json();
+      const reply = data.reply || '[Error receiving response]';
+
+      // Display AI reply
+      windowEl.innerHTML += `<div class="message ai">${reply}</div>`;
+      windowEl.scrollTop = windowEl.scrollHeight;
+      history.push({ role: 'assistant', content: reply });
+    });
+  </script>
+{% endblock %}
+
+
