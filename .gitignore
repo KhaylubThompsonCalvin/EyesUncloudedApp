@@ -1,13 +1,16 @@
 
-# Ignore secrets and environment
+# Ignore secrets and environment files
 .env
+.env.*
+secrets/
 
 # Ignore Python cache
 __pycache__/
 *.pyc
 
-# Ignore VS Code settings (optional)
+# VS Code settings
 .vscode/
 
-# Ignore audio and temp files (optional)
-# *.wav
+# Optional: Ignore audio files (remove if you WANT to keep .wav files)
+*.wav
+
